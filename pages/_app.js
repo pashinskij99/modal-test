@@ -5,9 +5,7 @@ import { store } from "../store"
 export default function App({ Component, pageProps }) {
   return (
       <Provider store={store}>
-          <div className='app'>
-              <Component {...pageProps} />
-          </div>
+          <Component {...pageProps} />
       </Provider>
   )
 }

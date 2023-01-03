@@ -2,8 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import Modal from "../components/modalWithPortal";
-import Portal from "../components/portal";
 import {useDispatch, useSelector} from "react-redux";
 import { setStatusModalWithPortal, setStatusModalWithoutPortal } from "../store/modal";
 import ModalWithPortal from "../components/modalWithPortal";
@@ -15,7 +13,7 @@ export default function Home() {
   const { statusModalWithPortal, statusModalWithoutPortal } = useSelector(state => state.modal)
   const dispatch = useDispatch()
 
-  console.log('statusModalWithPortal', statusModalWithPortal, statusModalWithoutPortal)
+  // console.log('statusModalWithPortal', statusModalWithPortal, statusModalWithoutPortal)
 
   return (
     <>
