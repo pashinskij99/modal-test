@@ -2,10 +2,21 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
+import Modal from "../components/modalWithPortal";
+import Portal from "../components/portal";
+import {useDispatch, useSelector} from "react-redux";
+import { setStatusModalWithPortal, setStatusModalWithoutPortal } from "../store/modal";
+import ModalWithPortal from "../components/modalWithPortal";
+import ModalWithoutPortal from "../components/modalWithoutPortal";
 
-const inter = Inter({ subsets: ['latin'] })
+export const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const { statusModalWithPortal, statusModalWithoutPortal } = useSelector(state => state.modal)
+  const dispatch = useDispatch()
+
+  console.log('statusModalWithPortal', statusModalWithPortal, statusModalWithoutPortal)
+
   return (
     <>
       <Head>
@@ -60,63 +71,44 @@ export default function Home() {
         </div>
 
         <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          <button
             className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => dispatch(setStatusModalWithoutPortal(true))}
           >
             <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
+              Popup without portal <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Find in-depth information about Next.js features and&nbsp;API.
             </p>
-          </a>
+          </button>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          <button
             className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => dispatch(setStatusModalWithPortal(true))}
           >
             <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
+              Popup with portal <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Learn about Next.js in an interactive course with&nbsp;quizzes!
             </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+          </button>
         </div>
+        <ModalWithPortal
+            title={'Modal with portal'}
+            show={statusModalWithPortal}
+            onClose={() => dispatch(setStatusModalWithPortal(false)) }
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet commodi deleniti, eius eligendi, hic illum impedit inventore iusto nam necessitatibus neque nulla perferendis placeat qui rem repellendus repudiandae voluptate?
+        </ModalWithPortal>
+        <ModalWithoutPortal
+            show={statusModalWithoutPortal}
+            onClose={() => dispatch(setStatusModalWithoutPortal(false)) }
+            title={'Modal without portal'}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet commodi deleniti, eius eligendi, hic illum impedit inventore iusto nam necessitatibus neque nulla perferendis placeat qui rem repellendus repudiandae voluptate?
+        </ModalWithoutPortal>
       </main>
     </>
   )
